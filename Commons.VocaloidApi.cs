@@ -30,7 +30,7 @@ namespace Commons.VocaloidApi
 	}
 
 	[Register ("VSLuaNote")]
-	public struct Note
+	public class Note
 	{
 		[Register ("posTick")]
 		public int PositionTick;
@@ -52,7 +52,7 @@ namespace Commons.VocaloidApi
 	}
 	
 	[Register ("VSLuaNoteEx")]
-	public struct NoteEx
+	public class NoteEx
 	{
 		[Register ("posTick")]
 		public int PositionTick;
@@ -96,7 +96,7 @@ namespace Commons.VocaloidApi
 	}
 
 	[Register ("VSLuaControl")]
-	public struct Control
+	public class Control
 	{
 		public const string DYN = "DYN";
 		public const string BRE = "BRE";
@@ -127,7 +127,7 @@ namespace Commons.VocaloidApi
 	}
 	
 	[Register ("VSLuaTempo")]
-	public struct Tempo
+	public class Tempo
 	{
 		[Register ("posTick")]
 		public int PositionTick;
@@ -136,7 +136,7 @@ namespace Commons.VocaloidApi
 	}
 
 	[Register ("VSLuaTimeSig")]
-	public struct TimeSignature
+	public class TimeSignature
 	{
 		public TimeSignature (int positionTick, int numerator, int denominator)
 		{
@@ -156,7 +156,7 @@ namespace Commons.VocaloidApi
 	}
 
 	[Register ("VSLuaMusicalPart")]
-	public struct MusicalPart
+	public class MusicalPart
 	{
 		[Register ("posTick")]
 		public int PositionTick;
@@ -171,7 +171,7 @@ namespace Commons.VocaloidApi
 	}
 
 	[Register ("VSLuaMusicalSinger")]
-	public struct MusicalSinger
+	public class MusicalSinger
 	{
 		[Register ("vBS")]
 		public int BankSelect;
@@ -195,7 +195,7 @@ namespace Commons.VocaloidApi
 
 	// VSLuaWAVPart
 	[Register ("VSLuaWAVPart")]
-	public struct WavPart
+	public class WavPart
 	{
 		[Register ("posTick")]
 		public int PositionTick;
@@ -214,6 +214,19 @@ namespace Commons.VocaloidApi
 		[Register ("filePath")]
 		public string FilePath;
 	}
+	
+	[Register ("VSFlexDlgField")]
+	public class DialogField
+	{
+		[Register ("name")]
+		public string Name;
+		[Register ("caption")]
+		public string Caption;
+		[Register ("initialVal")]
+		public string InitialValue;
+		[Register ("type")]
+		public DialogFieldType Type;
+	}
 
 	// VSFlexDlgFieldType
 	public enum DialogFieldType
@@ -223,15 +236,6 @@ namespace Commons.VocaloidApi
 		Float,
 		String,
 		StringList
-	}
-	
-	// VSFlexDlgField
-	public struct DialogField
-	{
-		public string Name;
-		public string Caption;
-		public string InitialValue;
-		public DialogFieldType Type;
 	}
 
 	public enum MessageBoxStyle
