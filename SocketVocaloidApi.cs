@@ -6,11 +6,11 @@ using System.Text;
 
 namespace Commons.VocaloidApi
 {
-	public class SocketVocaloidApi : IVocaloidApi
+	public class SocketVocaloidConnector : IVocaloidApi
 	{
 		#region internals
 
-		public SocketVocaloidApi (string host, int port)
+		public SocketVocaloidConnector (string host, int port)
 		{
 			this.host = host;
 			this.port = port;
