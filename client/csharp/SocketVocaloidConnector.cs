@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -8,45 +9,45 @@ namespace Commons.VocaloidApi
 {
 	public class SocketVocaloidConnector : IVocaloidApi
 	{
+		public const int DefaultPort = 2039;
+		
 		#region internals
 
-		public SocketVocaloidConnector (string host, int port)
+		public SocketVocaloidConnector ()
 		{
-			this.host = host;
-			this.port = port;
 			processor = new JsonRequestProcessor (ProcessRequest);
 		}
 
-		public void Start ()
+		TcpClient tcp;
+		TextWriter output;
+
+		public void Open (string host)
 		{
+			Open (host, DefaultPort);
+		}
+		
+		public void Open (string host, int port)
+		{
+			if (tcp != null)
+				throw new InvalidOperationException ("Client already opened");
 			tcp = new TcpClient (host, port);
+			output = new StreamWriter (tcp.GetStream ());
 		}
 
-		public void Quit ()
+		public void Close ()
 		{
+			if (tcp == null)
+				throw new InvalidOperationException ("Client is not open");
+			output.WriteLine ("DONE");
 			tcp.Close ();
 		}
 
-		TcpClient tcp;
-		string host;
-		int port;
 		JsonRequestProcessor processor;
 
 		string ProcessRequest (string request)
 		{
-			var bytes = Encoding.UTF8.GetBytes (request);
-			var s = tcp.GetStream ();
-			s.Write (bytes, 0, bytes.Length);
-			var ret = "";
-			do {
-				int size = s.Read (bytes, 0, bytes.Length);
-				var str = Encoding.UTF8.GetString (bytes, 0, size);
-				int idx = str.IndexOf ('\0');
-				if (idx >= 0)
-					return ret + str.Substring (0, idx);
-				else
-					ret += str;
-			} while (true);
+			Console.WriteLine (request);
+			return Console.ReadLine ();
 		}
 
 		void ProcessEmpty (string functionName, params object [] args)
